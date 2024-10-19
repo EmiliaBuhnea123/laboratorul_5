@@ -57,19 +57,19 @@ Interfața utilizatorului este simplă și intuitivă. Pagina principală const�
 ### Exemple de utilizare a proiectului
 
 __Exemplul 1: Pagina de start__
-![Pagina de start](../todo-app/screenshots/Screenshot%202024-10-19%20212414.png)
+![Pagina de start](screenshots/Screenshot%202024-10-19%20212414.png)
 Aceasta este interfața pentru pagina Home. Utilizatorul poate să vadă o prezentarea scurtă a aplicației și două butoane ce îi permit să vizualizeze și să adauge sarcini. Aceste pagini pot fi accesate și din meniul de navigare, după cum se observă. De asemenea, pot fi vizualizate detaliile unei sarcini. 
 
 __Exemplul 2: Pagina Despre noi__
-![Pagina Despre noi](../todo-app/screenshots/Screenshot%202024-10-19%20212423.png)
+![Pagina Despre noi](screenshots/Screenshot%202024-10-19%20212423.png)
 Aceasta este interfața pentru pagina Despre noi. Ea conține o scurtă descriere a aplicației.
 
 __Exemplul 3: Pagina Lista Sarcini__
-![Pagina cu lista de sarcini](../todo-app/screenshots/Screenshot%202024-10-19%20212435.png)
+![Pagina cu lista de sarcini](screenshots/Screenshot%202024-10-19%20212435.png)
 Aceasta este interfața pentru pagina Lista Sarcini. Ea conține lista tuturor sarcinilor.
 
 __Exemplul 4: Pagina tasks/id__
-![Afișarea unei anumite sarcini](../todo-app/screenshots/Screenshot%202024-10-19%20212445.png)
+![Afișarea unei anumite sarcini](screenshots/Screenshot%202024-10-19%20212445.png)
 Aceasta este interfața pentru pagina de afișare a unei sarcini anumite. Utilizatorul poate vedea detaliile sarcinii cu un anumit id și informați detaliate despre altă sarcină care poate fi vizualizată și pe pagina Home. 
 _Numărul sarcinii apare conform id-ului introdus de utilizator._
 _Codul sursă_
@@ -78,7 +78,7 @@ _Codul sursă_
 <h1 class="text-center text-cyan-600 text-4xl">Sarcina {{ $task['id'] }}</h1>
 ```
 __Exemplul 5: Pagina Adaugă Sarcină__
-![Pagina de creare a unei sarcini](../todo-app/screenshots/Screenshot%202024-10-19%20214612.png)
+![Pagina de creare a unei sarcini](screenshots/Screenshot%202024-10-19%20214612.png)
 Această pagină este destinată adăugării undei noi sarcini.
 
 ### Răspunsuri la întrebările de control
