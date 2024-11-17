@@ -8,17 +8,17 @@ use Illuminate\Http\Request;
 class CommentController extends Controller
 {
     public function index($id)
-{
-    $comments = Comment::where('task_id', $id)->with(['task'])->get();
-    return view('tasks.show', ['comments' => $comments]); 
-}
+    {
+        $comments = Comment::where('task_id', $id)->with('task')->get();
 
+        return view('tasks.show', ['comments' => $comments]);
+    }
 
     public function store(Request $request, $id)
     {
-        $comments = Comment::create([
+       Comment::create([
             'comment' => $request->input('comment'),
-            'task_id' => $id, 
+            'task_id' => $id,
         ]);
 
         return redirect()->route('tasks.show', $id);
@@ -26,11 +26,12 @@ class CommentController extends Controller
 
     public function show($id)
     {
-        $comments = Comment::where('task_id', $id)->with(['task'])->get();
+        $comments = Comment::where('task_id', $id)
+            ->with(['task'])
+            ->get();
+
         return view('tasks.show', [
             'comments' => $comments,
         ]);
     }
-    
 }
-

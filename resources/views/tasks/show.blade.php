@@ -3,6 +3,12 @@
 @section('title', $task->title)
 
 @section('content')
+@if (session()->has('success'))
+    <div class="alert alert-success bg-red-500 text-white text-center py-3 px-6 rounded-md mt-4">
+        {{ session('success') }}
+    </div>
+@endif
+
     <div class="max-w-md mx-auto mt-10 p-5">
         <h1 class="font-bold text-blue-500 text-2xl">{{ $task->title }}</h1>
         <p>{{ $task->description }}</p>
@@ -22,9 +28,12 @@
             @endforeach
         </ul>
 
+        <h3 class="font-bold text-slate-600 text-xl">Data limită</h3>
+        <p>{{ $task->deadline }}</p>
+
         <h3 class="font-bold text-slate-600 text-xl" >Comentarii</h3>
         <ul>
-            @foreach ($comments as $item)
+            @foreach ($task->comments as $item)
                 <li>{{ $item->comment }}</li> 
             @endforeach
         </ul>
