@@ -1,4 +1,4 @@
-# Lucrarea de laborator nr. 4. Formulare și validarea datelor
+# Lucrarea de laborator nr. 5. Componentele de securitate în Laravel
 
 ### Instrucțiunile utilizate pentru rularea proiectului
 1. Pornirea serverul Laravel
