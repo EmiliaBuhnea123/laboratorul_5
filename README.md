@@ -17,17 +17,10 @@ _Crearea controllerului pentru admin și profil_
 php artisan make:controller AdminController
 php artisan make:controller ProfileController
 ```
-
 _Crearea unei clase de cerere personalizată (Request)_
 ```bash
 php artisan make:request ProfileRequest
 ```
-
-_Rularea unei reguli personalizate_
-```bash
-php artisan make:rule NoRestrictedWords
-```
-
 _Crearea unui link simbolic pentru storage_
 ```bash
 php artisan storage:link
@@ -40,10 +33,6 @@ _Crearea unei migrații pentru tabela profiles_
 ```bash
 php artisan make:migration create_profiles_table --create=profiles
 ```
-_Crearea unui seeder pentru administratori_
-```bash
-php artisan make:seeder CreateAdminSeeder 
-```
 _Instalarea pachetului Laravel Permission_
 ```bash
 composer require spatie/laravel-permission
@@ -51,6 +40,10 @@ composer require spatie/laravel-permission
 _Publicarea fișierelor de configurare pentru pachetul spatie/laravel-permission_
 ```bash
 php artisan vendor:publish --provider="Spatie\Permission\PermissionServiceProvider"
+```
+_Crearea unui seeder pentru administratori_
+```bash
+php artisan make:seeder CreateAdminSeeder 
 ```
 _Crearea unei politici TaskPolicy_
 ```bash
