@@ -11,7 +11,7 @@
    npm run dev
    ```
 
-### Instrucțiunile utilizate pentru configurarea structurii aplicației, utilizând bazele de date
+### Instrucțiunile utilizate pentru configurarea structurii aplicației
 _Crearea controllerului pentru admin și profil_
 ```bash
 php artisan make:controller AdminController
