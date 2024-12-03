@@ -3,7 +3,11 @@
 namespace App\Providers;
 
 // use Illuminate\Support\Facades\Gate;
+
+use App\Models\Task;
+use App\Policies\TaskPolicy;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
+use Illuminate\Support\Facades\Gate;
 
 class AuthServiceProvider extends ServiceProvider
 {
@@ -13,6 +17,7 @@ class AuthServiceProvider extends ServiceProvider
      * @var array<class-string, class-string>
      */
     protected $policies = [
+        Task::class => TaskPolicy::class,
         // 'App\Models\Model' => 'App\Policies\ModelPolicy',
     ];
 
@@ -23,6 +28,13 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
+        Gate::define('view-all-profiles', function ($user) {
+            return $user->hasRole('admin'); 
+        });
+
+        Gate::define('view-profile', function ($user, $profile) {
+            return $user->id === $profile->user_id;
+        });
+        
     }
 }

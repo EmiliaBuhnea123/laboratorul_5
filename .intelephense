@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "*.php": "php"
+    },
+    "intelephense.files.maxSize": 2000000
+}

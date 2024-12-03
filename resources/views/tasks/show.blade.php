@@ -1,6 +1,6 @@
 @extends('layout.app')
 
-@section('title', $task->title)
+@section('title', 'Sarcina')
 
 @section('content')
 @if (session()->has('success'))

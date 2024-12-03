@@ -15,7 +15,8 @@ class Task extends Model
         'title',
         'description',
         'deadline',
-        'category_id', 
+        'category_id',
+        'user_id',
     ];
 
     public function category()
@@ -30,7 +31,11 @@ class Task extends Model
 
     public function comments()
     {
-        return $this->hasMany(Comment::class); 
+        return $this->hasMany(Comment::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }
-

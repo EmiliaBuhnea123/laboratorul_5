@@ -1,66 +1,146 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Lucrarea de laborator nr. 4. Formulare și validarea datelor
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+### Instrucțiunile utilizate pentru rularea proiectului
+1. Pornirea serverul Laravel
+   ```bash
+   php artisan serve
+   ```
 
-## About Laravel
+2. Compilarea fișierelor frontend
+    ```bash
+   npm run dev
+   ```
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+### Instrucțiunile utilizate pentru configurarea structurii aplicației, utilizând bazele de date
+_Crearea controllerului pentru admin și profil_
+```bash
+php artisan make:controller AdminController
+php artisan make:controller ProfileController
+```
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+_Crearea unei clase de cerere personalizată (Request)_
+```bash
+php artisan make:request ProfileRequest
+```
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+_Rularea unei reguli personalizate_
+```bash
+php artisan make:rule NoRestrictedWords
+```
 
-## Learning Laravel
+_Crearea unui link simbolic pentru storage_
+```bash
+php artisan storage:link
+```
+_Crearea unui model Profile_
+```bash
+php artisan make:model Profile
+```
+_Crearea unei migrații pentru tabela profiles_
+```bash
+php artisan make:migration create_profiles_table --create=profiles
+```
+_Crearea unui seeder pentru administratori_
+```bash
+php artisan make:seeder CreateAdminSeeder 
+```
+_Instalarea pachetului Laravel Permission_
+```bash
+composer require spatie/laravel-permission
+```
+_Publicarea fișierelor de configurare pentru pachetul spatie/laravel-permission_
+```bash
+php artisan vendor:publish --provider="Spatie\Permission\PermissionServiceProvider"
+```
+_Crearea unei politici TaskPolicy_
+```bash
+php artisan make:policy TaskPolicy
+```   
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+### Descrierea lucrării de laborator
+În cadrul acestei lucrări de laborator, a fost necesar să se implemneteze autentificarea și autorizarea și protecția împotriva CSRF, precum și utilizarea mecanismelor integrate pentru gestionarea accesului.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+### Documentația proiectului
+#### 1. Descrierea aplicației
+Aplicația are următoarele funcționlități noi:
+- Autentificarea
+- Autorizarea (Admin și utilizator)
+- Delogarea
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+#### 2. Descrierea funcționalităților
+- __Autentificarea__: Utilizatorul trebuie să se autentifice înainte de a accesa pagina destinată lui. El nu poate accesa altă pagină prin URL. Este redirecționat înapoi la formular.
+- __Autorizarea (Admin și utilizator)__: 
+-Administrator: are posibilitatea de a vizualiza panourile personale ale tuturor utilizatorilor. 
+-Utilizator: poate vizualiza doar propriul panou personal, poate să adauge sarcini, să le editeze, să le comenteze și să le șteargă. El nu poate vedea alte profiluri sau realiza acțiuni asupra altor sarcini.
+- __Delogarea__: Utilizatorul și adminul pot să se delogheze.
 
-## Laravel Sponsors
+#### 3. Descrierea interfeței
+Interfața utilizatorului este intuitivă, iar mesajele de eroare sunt sugestive.
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+#### 4. Structura directoarelor și fișierelor
+- __Controllers__: Controlerele folosite
+- __resources/views/tasks__: Pagina pentru afișarea listei de sarcini, a unei anumite sarcini, cât și pentru editare, ștergere și crearea unei noi sarcini. Paginile pentru înregistrare și autentificare și cele destinate userului și adminului.
+- __Models__: Modelele folosite
+- __database/migrations__: Migrațiile utilizate în cadrul lucurului cu baza de date pentru a popula baza de date cu date de test.
+- __routes__: Rutele aplicației
+- __Http/Requests__: Cererile personalizate
+- __app/Providers/AuthServiceProvider__: Politicile și porțile
+- __app/Policies/TaskPolicy__: Definirea politicilor
 
-### Premium Partners
+### Exemple de utilizare a proiectului
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+__Exemplul 1: Pagina de înregistrare__
+![Pagina de înregistrare](screenshots/register.png)
+Utilizatorul își poate crea un cont. Contul său nu poate avea o adresă de email care există deja în baza de date.
 
-## Contributing
+__Exemplul 1: Pagina de creare profil__
+![Pagina de creare profil](screenshots/profile.png)
+Utilizatorul își poate crea un profil. 
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+__Exemplul 2: Pagina de logare__
+![Pagina de logare](screenshots/login.png)
+Utilizatorul și adminul pot să se logheze. În funcție de credențialele introduse, acesta este redirecționat pe pagina destinată lui, cu acțiunile permise doar lui.
 
-## Code of Conduct
+__Exemplul 3: Pagina pentru admin__
+![Pagina pentru admin](screenshots/admin-page.png)
+Adminul poate vedea toate profilurile. De asemenea, el poate și să creeze o sarcină, să realizeze acțiuni asupra ei.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+__Exemplul 4: Pagina pentru user__
+![Pagina pentru user](screenshots/user-page.png)
+Utilizatorul poate să își vizualizeze profilul, dar și să realizeze acțiuni asupra task-urilor create.
 
-## Security Vulnerabilities
+### Răspunsuri la întrebările de control
+_Ce soluții integrate pentru autentificare oferă Laravel?_
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+Laravel oferă instrumente gata de utilizare prin biblioteca Laravel Breeze sau o soluție mai complexă, Laravel Jetstream. Aceste biblioteci simplifică implementarea autentificării, însă dezvoltatorul poate configura procesul manual dacă este necesară o personalizare completă.
 
-## License
+_Ce metode de autentificare a utilizatorilor cunoașteți?_
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Principalele metode de autentificare sunt:
+- Autentificare pe bază de sesiuni
+- Autentificare pe bază de token-uri 
+- Autentificare prin OAuth (Google, Facebook, GitHub)
+- Autentificare pe bază de email și parolă
+
+_Care este diferența dintre autentificare și autorizare?_
+
+Autentificarea este procesul de verificare a identității unui utilizator. 
+Autorizarea este procesul de determinare a acțiunilor sau resurselor la care utilizatorul are acces după ce a fost autentificat cu succes.
+
+_Cum se asigură protecția împotriva atacurilor CSRF în Laravel?_
+
+Laravel protejează automat aplicațiile împotriva atacurilor CSRF printr-un token CSRF care este verificat la fiecare cerere POST. Tokenul este inclus în formularele HTML și verificat la procesarea cererilor pentru a se asigura că cererea provine dintr-o sursă validă.
+
+### Lista surselor utilizate
+Suportul de curs de pe git
+
+https://github.com/MSU-Courses/frameworks-for-web-development/tree/main/ro
+
+User permissions and roles in Laravel
+
+https://www.honeybadger.io/blog/laravel-permissions-roles/
+
+What Are Laravel Policies and How to Use Them to Control Access
+
+https://www.twilio.com/en-us/blog/what-are-laravel-policies-and-how-to-use-them-to-control-access
+

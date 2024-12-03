@@ -15,10 +15,7 @@ class TaskController extends Controller
 {
     public function index(Request $request)
     {
-        // $tasks = Task::with(['category', 'tag'])->get();
-        // dump($tasks);
-        // return view('tasks.index', ['tasks' => $tasks]);
-        $tasks = Task::all();
+        $tasks = auth()->user()->tasks;
         return view('tasks.index', ['tasks' => $tasks]);
     }
 
@@ -26,53 +23,66 @@ class TaskController extends Controller
     {
         $tags = Tag::all();
         $categories = Category::all();
-        return view('tasks.create', ['tags' => $tags, 'categories'=>$categories]);
+        return view('tasks.create', ['tags' => $tags, 'categories' => $categories]);
     }
 
     public function store(CreateTaskRequest $request)
     {
-        $validateData= $request->validated();
+        $validateData = $request->validated();
+
+        $validateData['user_id'] = auth()->id();
 
         DB::transaction(function () use ($validateData, $request) {
             $task = Task::create($validateData);
             $task->tag()->attach($request->input('tags'));
         });
 
-        session()->flash('success', 'Sarcina a fost salvată cu succes!');
-
-        return redirect()->route('tasks.index');
-    }    
+        return redirect()->route('tasks.index')
+            ->with('success', 'Sarcina a fost salvată cu succes!');
+    }
 
     public function show($id)
     {
+        $task = Task::findOrFail($id);
+        
+        $this->authorize('view', $task);
+
         $task = Task::with(['category', 'tag', 'comments'])->findOrFail($id);
         return view('tasks.show', [
             'task' => $task,
         ]);
     }
-    
+
     public function edit(int $id)
     {
-        $categories = Category::all(); 
+        $task = Task::findOrFail($id);
+
+        $this->authorize('update', $task);
+
+        $categories = Category::all();
 
         return view('tasks.edit', [
-            'task' => Task::findOrFail($id),
-            'categories' => $categories, 
+            'task' => $task,
+            'categories' => $categories,
         ]);
     }
 
     public function update(UpdateTaskRequest $request, $id)
     {
-        $validateData= $request->validated();
-        Task::findOrFail($id)->fill($validateData)->save();
+        $validateData = $request->validated();
+        $task = Task::where('id', $id)->where('user_id', auth()->id())->firstOrFail();
+        $this->authorize('update', $task);
+        $task->fill($validateData)->save();
         session()->flash('success', 'Sarcina a fost editată cu succes!');
-        return redirect()->route('tasks.show', $id);
+        return redirect()->route('profile.show', ['id' => auth()->user()->id]);
     }
 
     public function destroy(int $id)
     {
-        $tasks = Task::findOrFail($id)->delete();
+        $task = Task::findOrFail($id);
+
+        $this->authorize('delete', $task);
+
         return redirect()->route('tasks.index');
     }
 }
-

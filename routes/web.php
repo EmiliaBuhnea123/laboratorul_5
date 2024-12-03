@@ -1,9 +1,13 @@
 <?php
 
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CommentController;
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\TaskController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\TaskController;
+use Illuminate\Support\Facades\Route;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -15,40 +19,30 @@ use App\Http\Controllers\HomeController;
 |
 */
 
-Route::get('/', function () {
-    return view('home');
-});
+Route::middleware('auth')->group(function () {
+    Route::get('/', [HomeController::class, 'index'])->name('home');
+    Route::get('/about', [HomeController::class, 'about'])->name('about');
 
-Route::get('/about', function () {
-    return view('about');
-});
-
-Route::get('/', [HomeController::class, 'index'])->name('home');
-Route::get('/about', [HomeController::class, 'about'])->name('about');
-
-//sarcina 3.2
-// Route::get('/tasks', [TaskController::class, 'index']);
-// Route::get('/tasks/create', [TaskController::class, 'create']);
-// Route::post('/tasks', [TaskController::class, 'store']);
-// Route::get('/tasks/{id}', [TaskController::class, 'show']);
-// Route::get('/tasks/{id}/edit', [TaskController::class, 'edit']);
-// Route::put('/tasks/{id}', [TaskController::class, 'update']);
-// Route::delete('/tasks/{id}', [TaskController::class, 'destroy']);
-
-
-// Route::controller(TaskController::class)->prefix('tasks')->group(function () {
-//     Route::get('/', 'index')->name('tasks.index'); 
-//     Route::get('/create', 'create')->name('tasks.create'); 
-//     Route::post('/', 'store')->name('tasks.store');
-//     Route::get('/{id}', 'show')->name('tasks.show')->where('id', '[0-9]+');
-//     Route::get('/{id}/edit', 'edit')->name('tasks.edit')->where('id', '[0-9]+');
-//     Route::put('/{id}', 'update')->name('tasks.update')->where('id', '[0-9]+');
-//     Route::delete('/{id}', 'destroy')->name('tasks.destroy')->where('id', '[0-9]+'); 
-//    });
-
-Route::resource('tasks', TaskController::class)
-    ->only(['index', 'show', 'create', 'edit', 'destroy', 'update', 'store']);
+    Route::resource('tasks', TaskController::class)
+        ->only(['index', 'show', 'create', 'edit', 'destroy', 'update', 'store']);
 
     Route::resource('tasks.comments', CommentController::class)
-    ->only(['index', 'show', 'store']);
+        ->only(['index', 'show', 'store']);
 
+    Route::get('tasks/profile/{id}', [ProfileController::class, 'show'])->name('tasks.profile.show');
+});
+
+Route::get('/admin', [AdminController::class, 'index'])->name('admin.index');
+Route::get('/admin/profiles', [AdminController::class, 'index'])->name('admin.profiles');
+
+
+Route::controller(AuthController::class)->name('auth.')->group(function () {
+    Route::get('/register', 'register')->name('register');
+    Route::post('/register', 'storeRegister')->name('register.store');
+    Route::get('/login', 'login')->name('login');
+    Route::post('/login', 'storeLogin')->name('login.store');
+    Route::delete('/logout', 'logout')->name('logout');
+});
+
+Route::get('/profile', [ProfileController::class, 'create'])->name('profile.create');
+Route::post('/profile', [ProfileController::class, 'store'])->name('profile.store');

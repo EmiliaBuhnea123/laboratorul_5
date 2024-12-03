@@ -23,10 +23,12 @@ class CreateTaskRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'title' => 'required|string|min:3',
+            'title' => 'required|string|min:5',
             'description' => ['nullable', 'string', 'max:500', new NoRestrictedWords()],
             'deadline' => 'required|date|after_or_equal:today',
             'category_id' => 'required|exists:category,id',
         ];
     }
 }
+
+

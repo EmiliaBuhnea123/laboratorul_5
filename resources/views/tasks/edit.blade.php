@@ -41,7 +41,7 @@
 
             <div class="mb-4">
                 <label for="category_id" class="block text-sm font-medium text-gray-700">Categorie:</label>
-                <select id="category_id" name="category_id" value='{{ old('category_id') }}'
+                <select id="category_id" name="category_id" 
                     class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:outline-none focus:border-green-500">
                     <option value="" disabled selected>Alege o categorie</option>
                     @foreach ($categories as $category)

@@ -9,7 +9,6 @@
 <body class="font-sans m-0 p-0 bg-stone-100">
 
     <x-header />
-
     <div class="container max-w-4xl mx-auto my-5 p-5 bg-white rounded-lg shadow-lg">
         @yield('content')
     </div>
